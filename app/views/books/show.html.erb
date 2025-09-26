@@ -1,0 +1,48 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <h2>User info</h2>
+      <%= render 'users/info', user: @book_detail.user, book: @book %>
+
+      <h2 class="mt-3">New book</h2>
+      <%= render 'layouts/errors', obj: @book %> 
+      <%= render 'form', book: @book %>
+    </div>
+
+    <div class='col-md-8 offset-md-1'>
+      <h2>Book detail</h2>
+      <table class='table'>
+        <tr>
+          <td>
+            <%= link_to @book_detail.user do %>
+              <%= image_tag @book_detail.user.get_profile_image, size:"100x100" %><br>
+              <%= @book_detail.user.name %>
+            <% end %>
+          </td>
+          <td><%= link_to @book_detail.title, @book_detail %></td>
+          <td><%= @book_detail.body %></td>
+          <% if @book_detail.user == current_user %>
+            <td><%= link_to 'Edit', edit_book_path(@book_detail), class: "btn btn-sm btn-success" %></td>
+            <td><%= link_to 'Destroy', @book_detail, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %></td>
+          <% end %>
+          <td>  <p>コメント件数：<%= @book_detail.post_comments.count %></p>
+          <% @book_detail.post_comments.each do |post_comment| %>
+            <p><%= image_tag post_comment.user.get_profile_image, size: "100x100" %></p>
+            <%= post_comment.user.name %>
+            <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+                <% if post_comment.user == current_user %>
+                  <%= link_to "削除", book_post_comment_path(post_comment.book, post_comment), method: :delete %>
+                <% end %>
+          <% end %>
+          </td>
+        </tr>
+      </table>
+
+      <%= form_with model: [@book_detail, @post_comment] do |f| %>
+        <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+        <%= f.submit "送信する" %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
