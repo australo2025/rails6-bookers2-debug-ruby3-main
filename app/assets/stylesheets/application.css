@@ -13,3 +13,27 @@
  *= require_tree .
  *= require_self
  */
+
+ a.favorite-link,
+ a.favorite-link:visited,
+ a.favorite-link:hover,
+ a.favorite-link:active,
+ a.favorite-link:focus {
+   text-decoration: none !important;
+ }
+ 
+ a.favorite-link.liked,
+ a.favorite-link.liked:visited,
+ a.favorite-link.liked:hover,
+ a.favorite-link.liked:active,
+ a.favorite-link.liked:focus {
+   color: #e0245e !important;  /* いいね済（赤） */
+ }
+ 
+ a.favorite-link.not-liked,
+ a.favorite-link.not-liked:visited,
+ a.favorite-link.not-liked:hover,
+ a.favorite-link.not-liked:active,
+ a.favorite-link.not-liked:focus {
+   color: #666 !important;     /* 未いいね（グレー） */
+ }
