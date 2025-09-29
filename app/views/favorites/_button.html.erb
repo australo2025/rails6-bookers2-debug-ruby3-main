@@ -1,0 +1,9 @@
+<% liked = book.favorited_by?(current_user) %>
+<% count = book.favorites.count %>
+
+<%= link_to book_favorite_path(book),
+            method: (liked ? :delete : :post),
+            class: "favorite-link #{liked ? 'liked' : 'not-liked'}",
+            style: "text-decoration:none; color:#{liked ? '#e0245e' : '#666'};" do %>
+  <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i><%= count %>
+<% end %>
