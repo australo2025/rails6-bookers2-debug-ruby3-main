@@ -1,0 +1,11 @@
+<h2>Search: <%= @word %></h2>
+
+<% if @users %>
+  <% @users.each do |u| %>
+    <p><%= image_tag u.get_profile_image, size: "50x50" %> <%= link_to u.name, user_path(u) %></p>
+  <% end %>
+<% else %>
+  <% @books.each do |b| %>
+    <p><%= image_tag b.user.get_profile_image, size: "50x50" %> <%= link_to b.title, book_path(b) %> - <%= b.body %></p>
+  <% end %>
+<% end %>
