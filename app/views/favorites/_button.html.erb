@@ -3,6 +3,7 @@
 
 <%= link_to book_favorite_path(book),
             method: (liked ? :delete : :post),
+            remote: true,
             class: "favorite-link #{liked ? 'liked' : 'not-liked'}",
             style: "text-decoration:none; color:#{liked ? '#e0245e' : '#666'};" do %>
   <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i><%= count %>

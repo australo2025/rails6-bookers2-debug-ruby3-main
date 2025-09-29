@@ -21,7 +21,7 @@
         <span id="favorite-<%= book.id %>">
           <%= render 'favorites/button', book: book %>
         </span>
-      </td>
+        </td>
 
         <td><%= link_to "#{book.post_comments.count} コメント", book_path(book.id) %></td>
       </tr>

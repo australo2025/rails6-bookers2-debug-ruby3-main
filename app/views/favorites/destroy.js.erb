@@ -1,0 +1,2 @@
+document.getElementById("favorite-<%= @book.id %>").innerHTML =
+  "<%= j(render('favorites/button', book: @book)) %>";
