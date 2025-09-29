@@ -18,6 +18,15 @@ class User < ApplicationRecord
            foreign_key: :followed_id, dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
 
+  def follow(other_user)
+    return if self == other_user
+    relationships.find_or_create_by(followed_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    relationships.find_by(followed_id: other_user.id)&.destroy
+  end
+
   def following?(user)
     followings.exists?(user.id)
   end
