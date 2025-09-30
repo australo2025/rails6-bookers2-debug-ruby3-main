@@ -13,6 +13,12 @@ class BooksController < ApplicationController
     @book_detail = Book.find(params[:id])
     @book        = Book.new
     @post_comment = PostComment.new
+
+    session[:viewed_books] ||= []
+    unless session[:viewed_books].include?(@book_detail.id)
+      @book_detail.increment!(:view_count)
+      session[:viewed_books] << @book_detail.id
+    end
   end
 
   def create

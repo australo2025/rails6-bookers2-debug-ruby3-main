@@ -25,6 +25,7 @@
         </span>
       </td>
       <td>コメント数：<%= @book_detail.post_comments.count %></td>
+      <td>閲覧数：<%= @book_detail.view_count %></td>
       <td>
         <% if @book_detail.user == current_user %>
           <%= link_to 'Edit', edit_book_path(@book_detail) %>
