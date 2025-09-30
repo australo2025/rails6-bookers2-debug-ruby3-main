@@ -1,8 +1,12 @@
 class BooksController < ApplicationController
 
   def index
-    @books = Book.all
     @book  = Book.new
+    @books = Book
+               .left_joins(:favorites)                                # ❶ いいねを結合（0件の本も残す）
+               .select('books.*, COUNT(favorites.id) AS likes_count') # ❷ 本ごとの いいね数 を列に付ける
+               .group('books.id')                                     # ❸ 重複行をまとめる（集計の必須条件）
+               .order('likes_count DESC, books.id DESC')              # ❹ いいね数の多い順（同点は新しい順）
   end
 
   def show

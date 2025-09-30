@@ -1,2 +1,7 @@
 document.getElementById("favorite-<%= @book.id %>").innerHTML =
   "<%= j(render('favorites/button', book: @book)) %>";
+
+var list = document.getElementById("books-list");
+if (list) {
+  list.innerHTML = "<%= j(render('books/index', books: @books)) %>";
+}
