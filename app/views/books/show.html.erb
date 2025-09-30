@@ -11,32 +11,48 @@
 
     <div class='col-md-8 offset-md-1'>
       <h2>Book detail</h2>
-      <table class='table'>
+      <table>
+      <tr>
+        <td>
+          <%= link_to @book_detail.user do %>
+            <%= image_tag @book_detail.user.get_profile_image, size: "100x100" %><br>
+            <%= @book_detail.user.name %>
+          <% end %>
+        </td>
+        <td><%= link_to @book_detail.title, @book_detail %></td>
+        <td><%= @book_detail.body %></td>
+        <% if @book_detail.user == current_user %>
+          <td><%= link_to 'Edit', edit_book_path(@book_detail) %></td>
+          <td><%= link_to 'Destroy', @book_detail, method: :delete, data: { confirm: '本当に消しますか？' } %></td>
+        <% end %>
+      </tr>
+    </table>
+  
+    <!-- 本の下にコメント一覧 -->
+    <p>コメント件数：<%= @book_detail.post_comments.count %></p>
+  
+    <table>
+      <% @book_detail.post_comments.each do |post_comment| %>
         <tr>
+          <!-- 左: プロフィール画像 -->
+          <td><%= image_tag post_comment.user.get_profile_image, size: "60x60" %></td>
+  
+          <!-- 中: 画像の右にコメント（名前・日付・本文） -->
           <td>
-            <%= link_to @book_detail.user do %>
-              <%= image_tag @book_detail.user.get_profile_image, size:"100x100" %><br>
-              <%= @book_detail.user.name %>
+            <%= post_comment.user.name %>
+            <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+            <%= post_comment.comment %>
+          </td>
+  
+          <!-- 右: 自分のコメントだけ削除ボタン -->
+          <td>
+            <% if post_comment.user == current_user %>
+              <%= link_to "削除", book_post_comment_path(@book_detail, post_comment), method: :delete %>
             <% end %>
           </td>
-          <td><%= link_to @book_detail.title, @book_detail %></td>
-          <td><%= @book_detail.body %></td>
-          <% if @book_detail.user == current_user %>
-            <td><%= link_to 'Edit', edit_book_path(@book_detail), class: "btn btn-sm btn-success" %></td>
-            <td><%= link_to 'Destroy', @book_detail, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %></td>
-          <% end %>
-          <td>  <p>コメント件数：<%= @book_detail.post_comments.count %></p>
-          <% @book_detail.post_comments.each do |post_comment| %>
-            <p><%= image_tag post_comment.user.get_profile_image, size: "100x100" %></p>
-            <%= post_comment.user.name %>
-            <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-                <% if post_comment.user == current_user %>
-                  <%= link_to "削除", book_post_comment_path(post_comment.book, post_comment), method: :delete %>
-                <% end %>
-          <% end %>
-          </td>
         </tr>
-      </table>
+      <% end %>
+    </table>
 
       <%= form_with model: [@book_detail, @post_comment] do |f| %>
         <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
