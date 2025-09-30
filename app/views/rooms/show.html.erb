@@ -1,0 +1,18 @@
+<h2><%= @other.name %> さんとのチャット</h2>
+
+<div id="messages">
+  <% @messages.each do |m| %>
+    <div id="message-<%= m.id %>">
+      <%= image_tag m.user.get_profile_image, size: "40x40" %>
+      <strong><%= m.user.name %></strong>
+      <span><%= m.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+      <p><%= h m.content %></p>
+    </div>
+    <hr>
+  <% end %>
+</div>
+
+<%= form_with model: [@room, @message], local: true do |f| %>
+  <%= f.text_area :content, rows: 3, maxlength: 140, placeholder: '140文字まで' %>
+  <%= f.submit '送信' %>
+<% end %>

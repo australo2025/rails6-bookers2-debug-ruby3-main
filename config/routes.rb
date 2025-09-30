@@ -8,11 +8,15 @@ Rails.application.routes.draw do
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update] do
     resource :favorite, only: [:create, :destroy]
     resources :post_comments, only: [:create, :destroy]
-
   end
+
   resources :users, only: [:index,:show,:edit,:update] do
     resources :relationships, only: [:create]
     delete "/relationships"=>"relationships#destroy"
+  end
+
+  resources :rooms, only: [:create, :show] do
+    resources :messages, only: :create
   end
     
 end

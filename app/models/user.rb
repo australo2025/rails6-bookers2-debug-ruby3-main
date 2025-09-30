@@ -7,6 +7,10 @@ class User < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+  has_many :entries,  dependent: :destroy
+  has_many :rooms,    through: :entries
+  has_many :messages, dependent: :destroy
+
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
   
@@ -44,6 +48,10 @@ class User < ApplicationRecord
     else
       where("name LIKE ?", "%#{w}%")
     end
+  end
+
+  def mutual_follow?(other)
+    following?(other) && other.following?(self)
   end
 
 end
