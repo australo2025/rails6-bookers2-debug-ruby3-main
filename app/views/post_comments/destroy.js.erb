@@ -1,0 +1,5 @@
+document.getElementById("comments-<%= @book.id %>").innerHTML =
+  "<%= j(render('post_comments/list', book: @book)) %>";
+
+var form = document.getElementById("new-comment-form");
+if (form) form.reset();   // 送信後にテキストエリアを空に
