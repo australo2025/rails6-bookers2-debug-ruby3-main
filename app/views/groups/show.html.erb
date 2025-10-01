@@ -1,0 +1,6 @@
+<h2><%= @group.name %></h2>
+<p><%= @group.introduction %></p>
+<p>Owner: <%= @group.owner.name %></p>
+<% if current_user == @group.owner %>
+  <%= link_to "Edit", edit_group_path(@group) %>
+<% end %>

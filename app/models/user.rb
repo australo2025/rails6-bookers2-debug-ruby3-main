@@ -22,6 +22,9 @@ class User < ApplicationRecord
            foreign_key: :followed_id, dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
 
+  has_many :owned_groups, class_name: "Group", foreign_key: :owner_id, dependent: :nullify
+
+
   def follow(other_user)
     return if self == other_user
     relationships.find_or_create_by(followed_id: other_user.id)

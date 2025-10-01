@@ -1,0 +1,17 @@
+<h2>Groups</h2>
+<table>
+  <thead><tr><th>グループ名</th><th>紹介文</th><th></th></tr></thead>
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td><%= link_to group.name, group %></td>
+        <td><%= group.introduction %></td>
+        <td>
+          <% if current_user == group.owner %>
+            <%= link_to "Edit", edit_group_path(group) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
