@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index,:show,:edit,:update] do
     resources :relationships, only: [:create]
     delete "/relationships"=>"relationships#destroy"
+    get :search, on: :member
   end
 
   resources :rooms, only: [:create, :show] do

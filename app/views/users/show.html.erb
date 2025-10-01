@@ -98,3 +98,18 @@
     });
   })();
 </script>
+
+<div class="mt-4" id="daily-count-box">
+  <h3 class="h5 mb-2">指定日の投稿数</h3>
+
+  <%= form_with url: search_user_path(@user), method: :get, local: false, html: { id: "daily-count-form", class: "form-inline gap-2" } do %>
+    <label for="date" class="mr-2 mb-2">日付</label>
+    <%= date_field_tag :date, (params[:date] || Time.zone.today), id: "date", class: "form-control mb-2" %>
+    <%= submit_tag "表示", class: "btn btn-primary mb-2" %>
+  <% end %>
+
+  <!-- 初期表示（ページ読み込み時）。AJAX後はここが置き換わる -->
+  <div id="daily-count-result" class="mt-2">
+    本日の投稿数：<strong><%= @count_today %></strong>
+  </div>
+</div>

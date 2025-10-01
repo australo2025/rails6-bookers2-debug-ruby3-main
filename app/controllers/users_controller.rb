@@ -49,6 +49,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @user = User.find(params[:id])
+    selected_date = params[:date].present? ? Date.parse(params[:date]) : Time.zone.today
+    @daily_count  = @user.books.where(created_at: selected_date.all_day).count
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def user_params
