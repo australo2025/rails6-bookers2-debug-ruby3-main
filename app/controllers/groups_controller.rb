@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_group, only: [:show, :edit, :update]
+  before_action :set_group, only: [:show, :edit, :update, :join, :leave]
   before_action :ensure_owner!, only: [:edit, :update]
 
   def index
@@ -33,6 +33,16 @@ class GroupsController < ApplicationController
     end
   end
 
+  def join
+    @group.group_users.find_or_create_by!(user_id: current_user.id)
+    redirect_back fallback_location: group_path(@group)
+  end
+
+  def leave
+    @group.group_users.where(user_id: current_user.id).destroy_all
+    redirect_back fallback_location: group_path(@group)
+  end
+
   private
   def set_group
     @group = Group.find(params[:id])
@@ -43,7 +53,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    # 画像を使う場合は :image を足す（ActiveStorage/reamfileで名称は合わせる）
     params.require(:group).permit(:name, :introduction)
   end
 end

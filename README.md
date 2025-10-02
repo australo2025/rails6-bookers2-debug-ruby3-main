@@ -1,24 +1,17 @@
-# README
+# 西原
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## こんにちは
 
-Things you may want to cover:
+### 元気ですか
+- あいうえお
+- かきくけこ
+- さしすせそ
 
-* Ruby version
+1. たちつてと
+2. なにぬねの
 
-* System dependencies
+## users/index.html.erb
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+<div class='container px-5 px-sm-0'> <div class='row'> <div class='col-md-3'> <h2>User info</h2> <%= render 'users/info', user: current_user %> <h2 class="mt-3">New book</h2> <%= render 'layouts/errors', obj: @book %> <%= render 'books/form', book: @book %> </div> <div class='col-md-8 offset-md-1'> <h2>Users</h2> <%= render 'users/index', users: @users %> </div> </div> </div> <%= link_to "グループを作成する", new_group_path %> | <%= link_to "グループ一覧", group_path %>
+```

@@ -1,6 +1,26 @@
+<h2>Group Detail</h2>
 <h2><%= @group.name %></h2>
 <p><%= @group.introduction %></p>
 <p>Owner: <%= @group.owner.name %></p>
 <% if current_user == @group.owner %>
   <%= link_to "Edit", edit_group_path(@group) %>
 <% end %>
+
+<p>Members: <%= @group.users.count %></p>
+
+<% is_owner = @group.respond_to?(:owner_id) && @group.owner_id == current_user.id %>
+
+<% unless is_owner %>
+  <% if @group.users.exists?(current_user.id) %>
+    <%= button_to "Leave this group", leave_group_path(@group), method: :delete %>
+  <% else %>
+    <%= button_to "Join this group",  join_group_path(@group),  method: :post %>
+  <% end %>
+<% end %>
+
+<h3>Member list</h3>
+<ul>
+  <% @group.users.each do |u| %>
+    <li><%= link_to u.name, user_path(u) %></li>
+  <% end %>
+</ul>

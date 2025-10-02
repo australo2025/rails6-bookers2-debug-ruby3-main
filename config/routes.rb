@@ -22,5 +22,12 @@ Rails.application.routes.draw do
 
   resources :groups, only: [:new, :create, :index, :show, :edit, :update] do
   end
+
+  resources :groups do
+    member do
+      post   :join
+      delete :leave
+    end
+  end
     
 end

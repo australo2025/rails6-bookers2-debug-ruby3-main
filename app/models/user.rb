@@ -24,6 +24,8 @@ class User < ApplicationRecord
 
   has_many :owned_groups, class_name: "Group", foreign_key: :owner_id, dependent: :nullify
 
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
 
   def follow(other_user)
     return if self == other_user
