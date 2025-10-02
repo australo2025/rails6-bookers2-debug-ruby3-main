@@ -20,14 +20,12 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
-  resources :groups, only: [:new, :create, :index, :show, :edit, :update] do
-  end
-
-  resources :groups do
-    member do
-      post   :join
-      delete :leave
+    resources :groups do
+      member do
+        post   :join
+        delete :leave
+        get    :new_event
+        post   :send_event
+      end
     end
   end
-    
-end

@@ -1,0 +1,22 @@
+<h2>Notice an Event</h2>
+
+<p>
+  送信先：<strong><%= @group.name %></strong>
+  （メンバー <%= @group.users.count %> 名）
+</p>
+
+<%= form_with url: send_event_group_path(@group), method: :post, local: true do %>
+  <div>
+    <label for="event_title">Title</label><br>
+    <%= text_field_tag :title, nil, id: 'event_title', required: true %>
+  </div>
+
+  <div style="margin-top:8px;">
+    <label for="event_content">Content</label><br>
+    <%= text_area_tag :content, nil, id: 'event_content', rows: 8, required: true %>
+  </div>
+
+  <div style="margin-top:12px;">
+    <%= submit_tag '送信' %>
+  </div>
+<% end %>

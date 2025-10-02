@@ -24,3 +24,7 @@
     <li><%= link_to u.name, user_path(u) %></li>
   <% end %>
 </ul>
+
+<% if current_user == @group.owner %>
+  <%= link_to "Notice an Event", new_event_group_path(@group) %>
+<% end %>

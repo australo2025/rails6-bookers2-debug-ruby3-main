@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_group, only: [:show, :edit, :update, :join, :leave]
-  before_action :ensure_owner!, only: [:edit, :update]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :join, :leave, :new_event, :send_event]
+  before_action :require_owner!, only: [:edit, :update, :destroy, :new_event, :send_event]
 
   def index
     @groups = Group.all
@@ -43,6 +43,18 @@ class GroupsController < ApplicationController
     redirect_back fallback_location: group_path(@group)
   end
 
+  def new_event
+  end
+
+  def send_event
+    @title   = params[:title].to_s
+    @content = params[:content].to_s
+    @group.users.each do |user|
+      EventMailer.event_email(user, @group, @title, @content).deliver_now
+    end
+    render :event_sent
+  end
+  
   private
   def set_group
     @group = Group.find(params[:id])
@@ -55,4 +67,9 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit(:name, :introduction)
   end
+
+  def require_owner!
+    redirect_back(fallback_location: group_path(@group)) unless @group.owner == current_user
+  end
+
 end
