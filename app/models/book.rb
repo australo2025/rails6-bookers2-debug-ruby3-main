@@ -5,6 +5,9 @@ class Book < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :post_comments, dependent: :destroy
 
+  attr_readonly :rate
+  validates :rate, inclusion: { in: 1..5 }, allow_nil: true
+
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
@@ -19,5 +22,10 @@ class Book < ApplicationRecord
       where("title LIKE ?", "%#{w}%")
     end
   end
+
+  scope :latest, -> { order(created_at: :desc) }
+  scope :highest_rated, -> {
+    order(Arel.sql('rate IS NULL'), rate: :desc, created_at: :desc)
+  }
 
 end

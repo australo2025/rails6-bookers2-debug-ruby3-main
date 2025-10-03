@@ -10,6 +10,19 @@ import "jquery"
 import "popper.js"
 import "bootstrap"
 import "../stylesheets/application"
+import Raty from "raty-js";
+
+window.raty = function (elem, opt) {
+  const raty = new Raty(elem, opt);
+  raty.init();
+  return raty;
+};
+
+window.onReady = (fn) => {
+  if (document.readyState !== "loading") fn();
+  document.addEventListener("DOMContentLoaded", fn);
+  document.addEventListener("turbolinks:load", fn);
+};
 
 Rails.start()
 ActiveStorage.start()

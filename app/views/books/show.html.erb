@@ -26,6 +26,29 @@
       </td>
       <td>コメント数：<%= @book_detail.post_comments.count %></td>
       <td>閲覧数：<%= @book_detail.view_count %></td>
+
+      <td>
+      <% if @book_detail.rate.present? %>
+        <div id="rate_show_<%= @book_detail.id %>"></div>
+        <script>
+          onReady(function(){
+            const el = document.querySelector('#rate_show_<%= @book_detail.id %>');
+            if (!el) return;
+            raty(el, {
+              readOnly: true,
+              score: <%= @book_detail.rate %>,
+              number: 5,
+              starOn:  "<%= asset_path('star-on.png')  %>",
+              starOff: "<%= asset_path('star-off.png') %>",
+              starHalf:"<%= asset_path('star-half.png') %>"
+            });
+          });
+        </script>
+      <% else %>
+        <span class="text-muted">未評価</span>
+      <% end %>
+    </td>
+
       <td>
         <% if @book_detail.user == current_user %>
           <%= link_to 'Edit', edit_book_path(@book_detail) %>

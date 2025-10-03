@@ -25,6 +25,29 @@
 
         <td><%= link_to "#{book.post_comments.count} コメント", book_path(book.id) %></td>
         <td>閲覧数: <%= book.view_count %></td>
+
+        <td>
+        <% if book.rate.present? %>
+          <div id="rate_book_<%= book.id %>"></div>
+          <script>
+            onReady(function(){
+              const el = document.querySelector('#rate_book_<%= book.id %>');
+              if (!el) return;
+              raty(el, {
+                readOnly: true,
+                score: <%= book.rate %>,
+                number: 5,
+                starOn:  "<%= asset_path('star-on.png')  %>",
+                starOff: "<%= asset_path('star-off.png') %>",
+                starHalf:"<%= asset_path('star-half.png') %>"
+              });
+            });
+          </script>
+        <% else %>
+          <span class="text-muted">未評価</span>
+        <% end %>
+         </td>
+
       </tr>
     <% end %>
   </tbody>
