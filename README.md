@@ -1,17 +1,18 @@
-# 西原
+# Bookers2 Debug
 
-## こんにちは
+## 概要
+このアプリは「読んだ本の感想の共有」を実現する学習用 Rails アプリです。主要機能は「本の投稿」「いいね」「コメント」「フォロー」「タグ検索」など。
 
-### 元気ですか
-- あいうえお
-- かきくけこ
-- さしすせそ
+## 動作環境
+- Ruby 3.1.2 / Rails 6.1.x
+- SQLite3（開発） / Node.js + Yarn（Webpacker）
+- OS: Ubuntu / macOS いずれも可
 
-1. たちつてと
-2. なにぬねの
-
-## users/index.html.erb
-
-```
-<div class='container px-5 px-sm-0'> <div class='row'> <div class='col-md-3'> <h2>User info</h2> <%= render 'users/info', user: current_user %> <h2 class="mt-3">New book</h2> <%= render 'layouts/errors', obj: @book %> <%= render 'books/form', book: @book %> </div> <div class='col-md-8 offset-md-1'> <h2>Users</h2> <%= render 'users/index', users: @users %> </div> </div> </div> <%= link_to "グループを作成する", new_group_path %> | <%= link_to "グループ一覧", group_path %>
-```
+## セットアップ（Quick Start）
+```bash
+git clone https://github.com/australo2025/rails6-bookers2-debug-ruby3-main.git
+cd rails6-bookers2-debug-ruby3-main
+bundle install
+yarn install --check-files
+bin/rails db:prepare
+bin/rails s
