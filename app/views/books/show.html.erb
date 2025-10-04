@@ -20,6 +20,13 @@
       <td><%= link_to @book_detail.title, @book_detail %></td>
       <td><%= @book_detail.body %></td>
       <td>
+      <% if @book_detail.tag %>
+        Tag: <%= link_to @book_detail.tag.name, books_path(tag: @book_detail.tag.name) %>
+      <% else %>
+        Tag: ー
+        <% end %>
+      </td>
+      <td>
         <span id="favorite-<%= @book_detail.id %>">
           <%= render 'favorites/button', book: @book_detail %>
         </span>
@@ -58,16 +65,15 @@
       </td>
     </tr>
   </table>
-  
 
   <%= render 'post_comments/list', book: @book_detail %>
 
-<%= form_with model: [@book_detail, @post_comment],
-              local: false,                     # ← これでAJAX送信（remote: true）
-              html: { id: "new-comment-form" } do |f| %>
-  <%= f.text_area :comment, rows: '5', placeholder: 'コメントをここに' %>
-  <%= f.submit '送信する' %>
-<% end %>
+    <%= form_with model: [@book_detail, @post_comment],
+                  local: false,                     # ← これでAJAX送信（remote: true）
+                  html: { id: "new-comment-form" } do |f| %>
+      <%= f.text_area :comment, rows: '5', placeholder: 'コメントをここに' %>
+      <%= f.submit '送信する' %>
+    <% end %>
 
     </div>
   </div>
